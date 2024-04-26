@@ -1,0 +1,55 @@
+﻿@model Proyecto_Web.Entidades.Usuario
+@{
+    ViewData["Title"] = "RegistrarUsuario";
+    Layout = "~/Views/Shared/_Layout - Externo.cshtml";
+}
+
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth px-0">
+            <div class="row mx-0 w-100 justify-content-center">
+                <div class="col-lg-8">
+                    <div class="auth-form-light text-center py-5 px-4 px-sm-5">
+                        <div class="brand-logo">
+                            <img src="../../images/logo-dark.svg" alt="logo">
+                        </div>
+                        <h4>¡Nuevo aquí?</h4>
+                        <h6 class="font-weight-light">Registrarse es fácil. Solo toma unos pocos pasos</h6>
+                        @using (Html.BeginForm("RegistrarUsuario", "Home", FormMethod.Post, new { @class = "pt-3" }))
+                        {
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.NombreUsuario, new { @class = "form-control form-control-lg", @placeholder = "Nombre", @required = "true" })
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.Correo, new { @class = "form-control form-control-lg", @placeholder = "Correo Electrónico", @type = "email", @required = "true" })
+                            </div>
+                            <div class="form-group">
+                                @Html.PasswordFor(m => m.Contrasenna, new
+                                    {
+                                        @class = "form-control form-control-lg",
+                                        @placeholder = "Contraseña",
+                                        @type = "password",
+                                        @required = "required",
+                                        @pattern = "^((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\W]).{6,20})$",
+                                        @title = "La contraseña debe tener entre 6 y 20 caracteres y contener al menos un número, una mayúscula, una minúscula y un carácter especial."
+                                    })
+                            </div>
+                            <div class="mt-3">
+                                <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">REGISTRARSE</button>
+                            </div>
+                            @if (ViewBag.MsjPantalla != null)
+                            {
+                                <div class="alert alert-warning" role="alert">
+                                    @ViewBag.MsjPantalla
+                                </div>
+                            }
+                            <div class="text-center mt-4 font-weight-light">
+                                ¿Ya tienes una cuenta? <a href="@Url.Action("IniciarSesion", "Home")" class="text-primary">Iniciar Sesión</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

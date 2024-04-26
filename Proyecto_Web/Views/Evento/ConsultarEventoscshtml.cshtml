@@ -1,0 +1,121 @@
+﻿@model List<Proyecto_Web.Entidades.Evento>
+
+<div class="container-fluid content-header">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Eventos</h3>
+
+                    <div style="text-align:right">
+                        <a class="btn btn-primary" href="@Url.Action("RegistrarEvento", "Evento")"> + Registrar </a>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <table id="tablilla" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Ubicacion</th>
+                                <th>Precio</th>
+                                <th>Descripcion</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.IdEvento</td>
+                                    <td>@item.Nombre</td>
+                                    <th>@item.Fecha</th>
+                                    <th>@item.Hora</th>
+                                    <th>@item.Ubicacion</th>
+                                    <td>@item.Precio</td>
+                                    <th>@item.Descripcion</th>
+                                    @if (item.Estado)
+                                    {
+                                        <td>Activo</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Inactivo</td>
+                                    }
+
+                                    <td style="text-align:center">
+                                        <a class="btn btn-primary" href="@Url.Action("ActualizarEvento","Evento", new { id = item.IdEvento})">
+                                            <i class="fa fa-pencil-square-o fa-lg"></i>
+                                        </a>
+
+                                        <button type="button" class="btn btn-primary PasarDatos" data-toggle="modal" data-target="#exampleModal"
+                                                data-id="@item.IdEvento" data-name="@item.Nombre">
+                                            <i class="fa fa-trash-o fa-lg"></i>
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            @using (Html.BeginForm("EliminarEvento", "Evento", FormMethod.Post))
+            {
+
+                <div class="modal-body">
+                    <input type="hidden" id="IdEvento" name="IdEvento" value="" />
+                    <p id="Pregunta" name="Pregunta" value=""></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Procesar</button>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+
+<script src="~/jquery/jquery.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        var tablilla = new DataTable('#tablilla', {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/es-ES.json'
+            },
+            "bInfo": false,
+            "bLengthChange": false,
+            columnDefs: [{ type: 'string', targets: [0, 1, 2, 3] }]
+        });
+    });
+
+    $(".PasarDatos").click(function () {
+        $("#IdEvento").val($(this).attr('data-id'));
+        $("#Pregunta").text("¿Desea eliminar el evento " + $(this).attr('data-name') + "?")
+    });
+
+</script>

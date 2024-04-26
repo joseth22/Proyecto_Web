@@ -1,0 +1,30 @@
+﻿@model List<Proyecto_Web.Entidades.Evento>
+
+<h2>Historial de Eventos</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Ubicación</th>
+            <th>Precio</th>
+            <th>Descripción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var evento in Model)
+        {
+            <tr>
+                <td>@evento.Nombre</td>
+                <td>@evento.Fecha.ToString("yyyy-MM-dd")</td>
+                <td>@evento.Hora.ToString("HH:mm")</td>
+                <td>@evento.Ubicacion</td>
+                <td>@evento.Precio.ToString("C")</td>
+                <td>@evento.Descripcion</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
